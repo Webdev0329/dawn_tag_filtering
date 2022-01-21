@@ -1,0 +1,41 @@
+<div id="ajaxCart" class="{% if cart.item_count <= 0 %}empty{% endif %}">
+  <div class="cart-header">
+    <h2> Cart </h2> 
+    <a class="btn-close"><svg class="icon icon-close" aria-hidden="true" focusable="false"><use href="#icon-close"></use></svg></a>
+  </div>
+  <div class="cart-body">
+    {% if cart.item_count > 0 %}
+    {% for item in cart.items %}
+    <div class="cart-item" data-variantid="{{item.variant_id}}">
+      <div class="item-image">
+        <img src="{{item.image | img_url: '300x'}}" />
+      </div>
+      <div class="item-content">
+        <div class="item-row"> <span class="item-title"> {{item.title | split: '-' | first}} </span> </div>
+        <div class="item-row"> 
+          <span class="item-variant"> {{item.title | split: '-' | last}} </span>
+        </div>
+        <div class="item-row"> 
+          <span class="item-price"> {{item.price | money}} </span>
+        </div>
+        <div class="item-row"> 
+          <div class="quantity-box">
+            <button class="qty-minus"> - </button>
+            <input type="number" class="qty-input" value="{{item.quantity}}" />
+            <button class="qty-plus"> + </button>
+          </div>
+          <a class="item-remove">Remove</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+  </div>
+  <div class="cart-footer">
+    <a href="/checkout" class="btn-checkout">Checkout - {{cart.total_price | money}}</a>
+  </div>
+</div>
+
+<div class="ajaxcart_overlay">
+</div>
